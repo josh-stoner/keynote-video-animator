@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Animations in Keynote — Josh Stoner</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f7f7f8;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .video-wrapper {
+      width: 100%;
+      background: #111;
+      aspect-ratio: 16/9;
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .meta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+
+    .description {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 28px;
+    }
+
+    .description strong {
+      color: #1a1a1a;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin-bottom: 24px;
+    }
+
+    .links-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 14px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid #e8e8e8;
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .link-item:hover {
+      background: #f5f5ff;
+      border-color: #c0c0f0;
+    }
+
+    .link-item .icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .link-item .label {
+      flex: 1;
+    }
+
+    .link-item .sublabel {
+      font-size: 0.78rem;
+      color: #888;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .footer {
+      padding: 20px 32px;
+      background: #f7f7f8;
+      border-top: 1px solid #eee;
+      font-size: 0.8rem;
+      color: #aaa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #5a5ae6;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="video-wrapper">
+      <video autoplay loop muted playsinline>
+        <source src="Animations-Keynote.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="content">
+      <div class="meta">Internal Workshop · People Development · Lyft</div>
+      <h1>Video Animations in Keynote</h1>
+      <p class="description">
+        A facilitated learning session designed for instructional designers and content creators
+        looking to produce <strong>polished animated video content using Apple Keynote</strong> —
+        without After Effects. Covers Build In / Action / Build Out animation categories,
+        Build Order sequencing, Magic Move transitions, motion blur, and video export workflows,
+        demonstrated through real Lyft business literacy examples built live during the session.
+      </p>
+
+      <hr class="divider" />
+
+      <div class="links-label">View this work</div>
+      <div class="links">
+
+        <a class="link-item" href="Animations-Keynote.mp4" target="_blank">
+          <span class="icon">▶</span>
+          <div class="label">
+            Watch the presentation
+            <div class="sublabel">Autoplay video · 1080p · Animations in motion</div>
+          </div>
+        </a>
+
+        <a class="link-item" href="Animations-Keynote.pdf" target="_blank">
+          <span class="icon">📄</span>
+          <div class="label">
+            View slide deck
+            <div class="sublabel">PDF with presenter notes · Full facilitation content</div>
+          </div>
+        </a>
+
+        <a class="link-item" href="Animations-Keynote.key" download>
+          <span class="icon">⬇</span>
+          <div class="label">
+            Download source file
+            <div class="sublabel">Apple Keynote · Inspect animations and build order</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Josh Stoner · Instructional Designer</span>
+      <a href="https://community.articulate.com/users/joshstoner/1370322" target="_blank">E-Learning Heroes Profile →</a>
+    </div>
+
+  </div>
+</body>
+</html>
