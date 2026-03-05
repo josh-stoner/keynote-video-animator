@@ -1,35 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Video Animations in Keynote — Josh Stoner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keynote Video Animations — Joshua Stoner</title>
+  <script>(function(){var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #F1F0ED;
+      --card-bg: #FFFFFF;
+      --card-border: rgba(0,0,0,0.06);
+      --text: #1D0C17;
+      --text-secondary: #4A3F3A;
+      --text-muted: #6B5E59;
+      --text-faint: #9A8E88;
+      --purple: #830077;
+      --blue-shift: #4A6FE8;
+      --pink: #CF0091;
+      --coral: #D05A48;
+      --max-width: 720px;
+      --nav-height: 56px;
+      --radius: 12px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #110A0F;
+      --card-bg: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.08);
+      --text: #D2CBC7;
+      --text-secondary: #B5ACA7;
+      --text-muted: #908580;
+      --text-faint: #645A56;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { font-size: 16px; scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f7f7f8;
-      color: #1a1a1a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body, nav, footer, .asset-link, .video-card, hr {
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: var(--purple); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--pink); }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 3rem 0; }
+    [data-theme="dark"] hr { border-top-color: rgba(255,255,255,0.08); }
+
+    /* Nav */
+    nav {
+      background: rgba(241,240,237,0.85);
+      backdrop-filter: blur(16px) saturate(1.2);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+    }
+    [data-theme="dark"] nav {
+      background: rgba(17,10,15,0.85);
+      border-bottom-color: rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .nav-name:hover { color: var(--purple); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-right a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .nav-right a:hover { color: var(--text); }
+    .nav-right a svg { width: 0.9rem; height: 0.9rem; color: var(--text-faint); }
+    .nav-right a:hover svg { color: var(--text); }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      cursor: pointer;
+      padding: 0;
+      color: var(--text-muted);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.03);
+    }
+    .theme-toggle svg { width: 16px; height: 16px; stroke-width: 2; }
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+    [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+    [data-theme="dark"] .theme-toggle { border-color: rgba(255,255,255,0.12); }
+    [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); }
+
+    /* Layout */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 6rem;
+      flex: 1;
+      width: 100%;
     }
 
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      max-width: 700px;
-      width: 100%;
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--purple);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 2.5rem;
+    }
+    .back-link:hover { color: var(--pink); }
+    .back-link svg { width: 0.9rem; height: 0.9rem; }
+
+    /* Header */
+    .page-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .page-meta {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--blue-shift);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* Video */
+    .video-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      margin-bottom: 3rem;
     }
 
     .video-wrapper {
       width: 100%;
-      background: #111;
+      background: #0A0A0A;
       aspect-ratio: 16/9;
     }
 
@@ -39,173 +216,330 @@
       display: block;
     }
 
-    .content {
-      padding: 32px;
+    .video-caption {
+      padding: 1rem 1.25rem;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-faint);
     }
 
-    .meta {
-      font-size: 0.75rem;
+    /* Asset links */
+    .assets-label {
+      font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #888;
-      margin-bottom: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
     }
 
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 14px;
-    }
-
-    .description {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: #444;
-      margin-bottom: 28px;
-    }
-
-    .description strong {
-      color: #1a1a1a;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid #eee;
-      margin-bottom: 24px;
-    }
-
-    .links-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #888;
-      margin-bottom: 14px;
-    }
-
-    .links {
+    .assets {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
     }
 
-    .link-item {
+    .asset-link {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 8px;
-      border: 1px solid #e8e8e8;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
       text-decoration: none;
-      color: #1a1a1a;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: background 0.15s, border-color 0.15s;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .asset-link:hover {
+      border-color: rgba(0,0,0,0.12);
+      transform: translateY(-1px);
+      color: var(--text);
+    }
+    [data-theme="dark"] .asset-link:hover {
+      border-color: rgba(255,255,255,0.15);
     }
 
-    .link-item:hover {
-      background: #f5f5ff;
-      border-color: #c0c0f0;
-    }
-
-    .link-item .icon {
-      font-size: 1.1rem;
-      width: 24px;
-      text-align: center;
+    .asset-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 8px;
+      background: rgba(74,111,232,0.08);
       flex-shrink: 0;
     }
+    .asset-icon svg {
+      width: 1.1rem;
+      height: 1.1rem;
+      color: var(--blue-shift);
+    }
 
-    .link-item .label {
+    .asset-text {
       flex: 1;
     }
 
-    .link-item .sublabel {
+    .asset-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+    }
+
+    .asset-sub {
       font-size: 0.78rem;
-      color: #888;
       font-weight: 400;
-      margin-top: 2px;
+      color: var(--text-faint);
+      margin-top: 0.15rem;
+      display: block;
     }
 
-    .footer {
-      padding: 20px 32px;
-      background: #f7f7f8;
-      border-top: 1px solid #eee;
-      font-size: 0.8rem;
-      color: #aaa;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* Context */
+    .context-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
     }
 
-    .footer a {
-      color: #888;
-      text-decoration: none;
+    .context-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 2rem;
+      margin-bottom: 0;
     }
 
-    .footer a:hover {
-      color: #5a5ae6;
+    .context-item {
+      padding: 0.4rem 0;
+    }
+
+    .context-key {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 0.15rem;
+    }
+
+    .context-val {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    /* Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.5rem; }
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--blue-shift);
+      background: rgba(74,111,232,0.08);
+      border: 1px solid rgba(74,111,232,0.12);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--card-bg);
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding: 2.5rem;
+      text-align: left;
+      color: var(--text-faint);
+      font-size: 0.82rem;
+      font-weight: 400;
+    }
+    [data-theme="dark"] footer {
+      background: rgba(17,10,15,0.85);
+      border-top-color: rgba(255,255,255,0.06);
+    }
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--text); }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .page-header h1 { animation: fadeSlideUp 0.6s ease both; }
+    .page-header p { animation: fadeSlideUp 0.6s ease both; animation-delay: 0.15s; }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .page-header h1 { font-size: 1.6rem; }
+      .context-grid { grid-template-columns: 1fr; }
+      .nav-inner { flex-direction: column; gap: 0.5rem; padding: 0.75rem 1rem; }
+      nav { height: auto; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
+  <nav>
+    <div class="nav-inner">
+      <a href="https://josh-stoner.github.io" class="nav-name">Joshua Stoner</a>
+      <div class="nav-right">
+        <a href="https://josh-stoner.github.io">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Portfolio
+        </a>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-    <div class="video-wrapper">
-      <video autoplay loop muted playsinline>
-        <source src="Animations-Keynote.mp4" type="video/mp4" />
-      </video>
+  <main>
+    <a href="https://josh-stoner.github.io" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      Back to Portfolio
+    </a>
+
+    <div class="page-header">
+      <div class="page-meta">Content Design &amp; Production</div>
+      <h1>Keynote Video Animations</h1>
+      <p>Custom animation systems built in Apple Keynote for learning video production &mdash; used across the OKRs series (NPS ~100), Equity Compensation program, and Email Writing course. A craft-driven approach to motion graphics using accessible tools, producing results compared to $600&ndash;800/min professional vendor output.</p>
     </div>
 
-    <div class="content">
-      <div class="meta">Internal Workshop · People Development · Lyft</div>
-      <h1>Video Animations in Keynote</h1>
-      <p class="description">
-        A facilitated learning session designed for instructional designers and content creators
-        looking to produce <strong>polished animated video content using Apple Keynote</strong> —
-        without After Effects. Covers Build In / Action / Build Out animation categories,
-        Build Order sequencing, Magic Move transitions, motion blur, and video export workflows,
-        demonstrated through real Lyft business literacy examples built live during the session.
-      </p>
+    <div class="video-card reveal">
+      <div class="video-wrapper">
+        <video autoplay loop muted playsinline>
+          <source src="Animations-Keynote.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-caption">Presentation demo &mdash; animations in motion, no audio</div>
+    </div>
 
-      <hr class="divider" />
+    <div class="assets-label">View this work</div>
+    <div class="assets">
+      <a class="asset-link reveal" href="Animations-Keynote.pdf" target="_blank">
+        <span class="asset-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        </span>
+        <span class="asset-text">
+          <span class="asset-title">Slide deck (PDF)</span>
+          <span class="asset-sub">Teaching notes and callouts included</span>
+        </span>
+      </a>
+      <a class="asset-link reveal" href="keynote-files.zip" download>
+        <span class="asset-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        </span>
+        <span class="asset-text">
+          <span class="asset-title">Source file (Keynote)</span>
+          <span class="asset-sub">Inspect animations and build order directly</span>
+        </span>
+      </a>
+    </div>
 
-      <div class="links-label">View this work</div>
-      <div class="links">
+    <hr>
 
-        <a class="link-item" href="Animations-Keynote.mp4" target="_blank">
-          <span class="icon">▶</span>
-          <div class="label">
-            Watch the presentation demo (no sound)
-            <div class="sublabel">Video · 1080p · Animations in motion in session guidance.</div>
-          </div>
-        </a>
-
-        <a class="link-item" href="Animations-Keynote.pdf" target="_blank">
-          <span class="icon">📄</span>
-          <div class="label">
-            View slide deck (PDF)
-            <div class="sublabel">PDF with teaching notes/callouts.</div>
-          </div>
-        </a>
-
-        <a class="link-item" href="keynote-files.zip" download>
-          <span class="icon">⬇</span>
-          <div class="label">
-            Download source file
-            <div class="sublabel">Apple Keynote · Inspect animations and build order.</div>
-          </div>
-        </a>
-
+    <div class="context-label">Context</div>
+    <div class="context-grid reveal">
+      <div class="context-item">
+        <div class="context-key">Role</div>
+        <div class="context-val">Content Designer &amp; Producer</div>
+      </div>
+      <div class="context-item">
+        <div class="context-key">Years</div>
+        <div class="context-val">2019&ndash;2021</div>
+      </div>
+      <div class="context-item">
+        <div class="context-key">Tool</div>
+        <div class="context-val">Apple Keynote</div>
+      </div>
+      <div class="context-item">
+        <div class="context-key">Scope</div>
+        <div class="context-val">3 learning programs</div>
       </div>
     </div>
 
-    <div class="footer">
-      <span>Josh Stoner · Instructional Designer</span>
-      <a href="https://community.articulate.com/users/joshstoner/1370322" target="_blank">E-Learning Heroes Profile →</a>
+    <div class="tags reveal">
+      <span class="tag">Keynote animation</span>
+      <span class="tag">Video production</span>
+      <span class="tag">Motion graphics</span>
+      <span class="tag">Learning content</span>
     </div>
+  </main>
 
-  </div>
+  <footer>
+    <p>Joshua Stoner &bull; Brooklyn, NY &bull; <a href="https://josh-stoner.github.io">Portfolio</a></p>
+  </footer>
+
+  <script>
+  (function () {
+    function getPreferred() {
+      var saved = localStorage.getItem('theme');
+      if (saved) return saved;
+      return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function apply(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+    apply(getPreferred());
+    document.addEventListener('DOMContentLoaded', function () {
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var current = document.documentElement.getAttribute('data-theme');
+          apply(current === 'dark' ? 'light' : 'dark');
+        });
+      }
+      var reveals = document.querySelectorAll('.reveal');
+      if (!reveals.length || !('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('revealed'); });
+        return;
+      }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          var staggerDelay = 0;
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                var el = entry.target;
+                var delay = parseInt(el.getAttribute('data-reveal-delay')) || 0;
+                if (delay) {
+                  setTimeout(function () { el.classList.add('revealed'); }, delay);
+                } else {
+                  el.classList.add('revealed');
+                }
+                observer.unobserve(el);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+          reveals.forEach(function (el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+              el.setAttribute('data-reveal-delay', staggerDelay);
+              staggerDelay += 120;
+            }
+            observer.observe(el);
+          });
+        });
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
